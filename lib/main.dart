@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:shopping/home.dart';
+import 'package:shopping/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const splash(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+    );
   }
 }
 
@@ -30,13 +38,22 @@ class _splashState extends State<splash> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 3),(){
-      Navigator.push(context, MaterialPageRoute(builder: (context) =>  home()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) =>login()));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0,300,0,100),
+            child: Center(child: Image.asset('assets/images/shop.png',width: 200,height: 200,)),
+          )
+        ],
+      ),
+    );
   }
 }
 

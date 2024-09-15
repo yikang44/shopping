@@ -1,4 +1,3 @@
-import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 
 class home extends StatefulWidget {
@@ -11,6 +10,15 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+      ),
+      body: Column(
+        children: [
+
+        ],
+      ),
+    );
   }
 }
