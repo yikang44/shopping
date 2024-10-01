@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shopping/dataBase.dart';
 import 'package:shopping/home.dart';
+import 'package:shopping/login.dart';
+import 'package:sqflite/sqflite.dart';
 
 class sign extends StatefulWidget {
   const sign({super.key});
@@ -9,6 +12,9 @@ class sign extends StatefulWidget {
 }
 
 class _signState extends State<sign> {
+  final name = TextEditingController();
+  final emails = TextEditingController();
+  final passwords = TextEditingController();
   bool _isChange = true;
 
   @override
@@ -36,6 +42,7 @@ class _signState extends State<sign> {
                     height: 40,
                   ),
                   TextFormField(
+                    controller: name,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.grey[300],
@@ -54,6 +61,7 @@ class _signState extends State<sign> {
                     height: 20,
                   ),
                   TextFormField(
+                    controller: emails,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.grey[300],
@@ -72,6 +80,7 @@ class _signState extends State<sign> {
                     height: 20,
                   ),
                   TextFormField(
+                    controller: passwords,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.grey[300],
@@ -100,11 +109,12 @@ class _signState extends State<sign> {
                     height: 20,
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async{
+                      await DataBase.insertDatabase(name.text,emails.text, passwords.text);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const home()));
+                              builder: (context) => const login()));
                     },
                     child: Text(
                       "Login",
