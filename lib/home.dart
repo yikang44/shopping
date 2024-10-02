@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping/edit.dart';
+import 'package:shopping/shopList.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -31,9 +32,7 @@ class _homeState extends State<home> {
       return product;
     }
 
-    return product
-        .where((product) => product['itemLists'] == select)
-        .toList();
+    return product.where((product) => product['itemLists'] == select).toList();
   }
 
   @override
@@ -62,7 +61,7 @@ class _homeState extends State<home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const edit()));
+                                builder: (context) => const shoplist()));
                       },
                       icon: Icon(
                         Icons.shopping_cart_outlined,
@@ -89,10 +88,7 @@ class _homeState extends State<home> {
             padding: const EdgeInsets.all(8.0),
             child: Row(children: [
               Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 1.2,
+                width: MediaQuery.of(context).size.width / 1.2,
                 decoration: BoxDecoration(
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(20.0)),
@@ -121,12 +117,29 @@ class _homeState extends State<home> {
             ]),
           ),
           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                ),
-              )),
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: itemList.map((category) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: ChoiceChip(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      label: Text(category),
+                      selected: select == category,
+                      onSelected: (bool selected) {
+                        setState(() {
+                          select = selected ? category : '全部';
+                        });
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
           Expanded(
             child: isChanged ? buildGridView() : buildListView(),
           )
@@ -137,26 +150,46 @@ class _homeState extends State<home> {
 
   Widget buildGridView() {
     return GridView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 2 / 3),
+            crossAxisCount: 2, childAspectRatio: 2 / 3),
         itemCount: 10,
         itemBuilder: (context, index) {
-          return Card(
-            child: Center(
-              child: Text("商品 $index"),
+          return InkWell(
+            onTap: () {},
+            child: Card(
+              child: Column(
+                children: [
+                  Expanded(
+                      child: Image.asset(
+                    'assets/images/item.jpg',
+                    width: 50,
+                    height: 60,
+                    fit: BoxFit.cover,
+                  )),
+                  Text("商品 $index"),
+                ],
+              ),
             ),
+            borderRadius: BorderRadius.circular(10),
           );
         });
   }
 
   Widget buildListView() {
     return ListView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
         itemCount: 10,
         itemBuilder: (context, index) {
           return ListTile(
-            leading: Icon(Icons.short_text_outlined),
+            leading: Image.asset(
+              'assets/images/item.jpg',
+              width: 50,
+              height: 50,
+              fit: BoxFit.cover,
+            ),
             title: Text("商品$index"),
+            onTap: () {},
           );
         });
   }
