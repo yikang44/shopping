@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping/Infor.dart';
 import 'package:shopping/edit.dart';
 import 'package:shopping/shopList.dart';
 
@@ -66,6 +67,7 @@ class _homeState extends State<home> {
                       icon: Icon(
                         Icons.shopping_cart_outlined,
                         size: 30,
+                        color: Colors.black,
                       )),
                 ),
                 Container(
@@ -79,6 +81,7 @@ class _homeState extends State<home> {
                       icon: Icon(
                         Icons.account_circle_rounded,
                         size: 30,
+                        color: Colors.black,
                       )),
                 ),
               ],
@@ -156,18 +159,23 @@ class _homeState extends State<home> {
         itemCount: 10,
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => infor()));
+            },
             child: Card(
               child: Column(
                 children: [
-                  Expanded(
+                  Container(
+                    padding: EdgeInsets.all(20.0),
+                    alignment: Alignment.topCenter,
                       child: Image.asset(
                     'assets/images/item.jpg',
-                    width: 50,
-                    height: 60,
+                    width: 150,
+                    height: 130,
                     fit: BoxFit.cover,
                   )),
-                  Text("商品 $index"),
+                  Text("商品 $index",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),),
                 ],
               ),
             ),
@@ -181,15 +189,27 @@ class _homeState extends State<home> {
         padding: const EdgeInsets.symmetric(vertical: 10.0),
         itemCount: 10,
         itemBuilder: (context, index) {
-          return ListTile(
-            leading: Image.asset(
-              'assets/images/item.jpg',
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: Image.asset(
+                    'assets/images/item.jpg',
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+                  title: Text("商品$index"),
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => infor()));
+                  },
+                ),
+              ),
             ),
-            title: Text("商品$index"),
-            onTap: () {},
           );
         });
   }
